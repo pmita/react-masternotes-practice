@@ -1,5 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useFetch } from '../../hooks/useFetch';
 import './Create.css';
+// ROUTER
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
     //STATE
@@ -10,10 +13,14 @@ const Create = () => {
     const [ingredients, setIngredients] = useState([]);
     const ingredientInput = useRef(null); // we need to reference the input directly from the dom
 
+    // DATA
+    const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST');
+    const navigate = useNavigate();
+
     //EVENT HANDLERS
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(title, method, cookingTime, ingredients);
+        postData({ title, ingredients, method, cookingTime : cookingTime + ' minutes'}); //json server adds an id automatically
     }
 
     const handleAdd = (e) => {
@@ -26,6 +33,13 @@ const Create = () => {
         setNewIngredient(''); // empty input form after user clicks add
         ingredientInput.current.focus(); //this allows to focus on the input form
     }
+
+    // useEFFECT
+    useEffect(() => {
+        if(data){
+            navigate('/');
+        }
+    }, [data, navigate]);
     return(
         <div className='create'>    
             <h2 className='page-title'>Add a New Recipe</h2>
