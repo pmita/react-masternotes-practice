@@ -13,7 +13,7 @@ const themeReducer = (state, action) => {
 
 export const ThemeProvider = ({children}) => { //children props represent any component that will be wrapped by the provider
     const [state, dispatch] = useReducer(themeReducer, {
-        color : 'blue'
+        color : '#58249c'
     });
 
     const changeColor = (color) => {
