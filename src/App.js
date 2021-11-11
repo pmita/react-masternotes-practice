@@ -9,10 +9,14 @@ import Search from './pages/search/Search';
 // COMPONENTS
 import Navbar from './components/Navbar';
 import ThemeSelector from './components/ThemeSelector';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
+  //STATE & CONTEXT
+  const  { mode } = useTheme();
+
   return (
-    <div className="App">
+    <div className={`App ${mode}`}>
       <Router>
         <Navbar />
         <ThemeSelector />
